@@ -31,7 +31,7 @@ export const getOtherUsers = async (userId: string) => {
 }
 // queries from the database a single unique user by given Id
 export const getUserById = async (userId: string) => {
-  return await prisma.user.findUnique({
+  return prisma.user.findUnique({
     where: {
       id: userId,
     },
