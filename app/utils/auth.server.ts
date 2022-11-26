@@ -63,3 +63,54 @@ export async function login({ email, password }: LoginForm) {
 
     return  createUserSession(user.id, "/")
 }
+
+ 
+//requireUserId checks for a user's session. If one exists, it is a success and just returns the userId. 
+//If it fails, however, it will redirect the user to the login screen.
+
+export async function requireUserId(request: Request, redirectTo: string = new URL(request.url).pathname) {
+    const session = await getUserSession(request)
+    const userId = session.get('userId')
+    if (!userId || typeof userId !== 'string') {
+      const searchParams = new URLSearchParams([['redirectTo', redirectTo]])
+      throw redirect(`/login?${searchParams}`)
+    }
+    return userId
+  }
+  // - getUserSession grabs the current user's session based on the request's cookie.
+  function getUserSession(request: Request) {
+    return storage.getSession(request.headers.get('Cookie'))
+  }
+  //- getUserId returns the current user's id from the session storage.
+  async function getUserId(request: Request) {
+    const session = await getUserSession(request)
+    const userId = session.get('userId')
+    if (!userId || typeof userId !== 'string') return null
+    return userId
+  }
+  //- getUser returns the whole user document associated with the current session. If one is not found, the user is logged out.
+  export async function getUser(request: Request) {
+    const userId = await getUserId(request)
+    if (typeof userId !== 'string') {
+      return null
+    }
+  
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, email: true, profile: true },
+      })
+      return user
+    } catch {
+      throw logout(request)
+    }
+  }
+  //- logout destroys the current session and redirects the user to the login screen.
+  export async function logout(request: Request) {
+    const session = await getUserSession(request)
+    return redirect('/login', {
+      headers: {
+        'Set-Cookie': await storage.destroySession(session),
+      },
+    })
+  }

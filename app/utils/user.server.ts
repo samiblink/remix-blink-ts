@@ -16,3 +16,24 @@ export const createUser = async (user: RegisterForm) => {
   })
   return { id: newUser.id, email: user.email }
 }
+// querys from database from user collection all users EXCEPT current user
+export const getOtherUsers = async (userId: string) => {
+    return prisma.user.findMany({
+      where: {
+        id: { not: userId },
+    },
+      orderBy: {
+        profile: {
+          firstName: "asc",
+        },
+      },
+  })
+}
+// queries from the database a single unique user by given Id
+export const getUserById = async (userId: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  })
+}
