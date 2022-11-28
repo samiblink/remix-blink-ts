@@ -1,32 +1,66 @@
-import type { LoaderFunction } from "@remix-run/node"
+import type { LoaderFunction, ActionFunction } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { useLoaderData, useActionData } from "@remix-run/react"
 import { getUserById } from "~/utils/user.server"
 import { Modal } from "~/components/modal"
-import { getUser } from "~/utils/auth.server"
+import { getUser, requireUserId } from "~/utils/auth.server"
 import { UserCircle } from "~/components/user-circle"
 import { useState } from 'react';
-import type { KudoStyle } from "@prisma/client"
+import type { Color, Emoji, KudoStyle } from "@prisma/client"
 import { SelectBox } from "~/components/select-box"
 import { colorMap, emojiMap } from "~/utils/constants"
+// import HeadlessModal from '../../components/hlds-modal';
+import { Kudo } from "~/components/kudo"
+import { createKudo } from "~/utils/kudos.server"
 
+export const action: ActionFunction = async ({ request}) => {
+  const userId = await requireUserId(request)
+  const form = await request.formData()
+  const message = form.get('message')
+  const backgroundColor = form.get('backgroundColor')
+  const textColor = form.get('textColor')
+  const emoji = form.get('emoji')
+  const recipientId = form.get('recipientId')
 
+  if (
+    typeof message !=='string' ||
+    typeof recipientId !== 'string' ||
+    typeof backgroundColor !== 'string' ||
+    typeof textColor !== 'string' ||
+    typeof emoji!=='string'
+  ) {
+    return json({ error: `Invalid Form Data`}, { status: 400 })
+  }
+  if (!message.length) {
+    return json({ error: `please provide a message`}, { status: 400})
+  }
+  if (!recipientId.length) {
+    return json({ error: `No recipient found...` }, { status: 400 })
+  }
+  await createKudo(message, userId, recipientId, {
+    backgroundColor: backgroundColor as Color,
+    textColor: textColor as Color,
+    emoji: emoji as Emoji,
+  })
+  return redirect("/home")
+}
 export const loader: LoaderFunction = async ({params, request }) => {
     const { userId } = params // pulls params field from loader function and grabs userId value.
+    const user = await getUser(request)
 
     if (typeof userId !== "string") {
         return redirect("/home")
     }
     const recipient = await getUserById(userId)
-    const user = await getUser(request)
-    return json({recipient, user})
+    
+    return json({user, recipient })
 }
 export default function KudoModal() {
     const actionData = useActionData()
-    const [formError] = useState(actionData?.error || '')
+    const [formError] = useState(actionData?.error || "")
     const [formData, setFormData] = useState({
-      message: '',
-      style: {
+    message: "",
+    style: {
           backgroundColor: 'RED',
           textColor: 'WHITE',
           emoji: 'THUMBSUP',
@@ -43,6 +77,7 @@ export default function KudoModal() {
                     [field]: e.target.value 
                     }
                 }))
+              }
     const getOptions = (data: any) => Object.keys(data).reduce((acc: any[], curr) => {
         acc.push({
             name: curr.charAt(0).toUpperCase() + curr.slice(1).toLowerCase(),
@@ -112,7 +147,7 @@ export default function KudoModal() {
           <br />
           <p className="text-blue-600 font-semibold mb-2">Preview</p>
           <div className="flex flex-col items-center md:flex-row gap-x-24 gap-y-2 md:gap-y-0">
-            {/* The Preview Goes Here */}
+            <Kudo profile={user.profile} kudo={formData} />
             <div className="flex-1" />
             <button
               type="submit"
@@ -124,4 +159,4 @@ export default function KudoModal() {
         </form>
       </Modal>
     )
-  }}
+  }

@@ -23,6 +23,8 @@ enum Color {
 type Profile {
   firstName String
   lastName String
+  department Department? @default(MARKETING)
+  profilePicture String?
 }
 generator client {
   provider = "prisma-client-js"

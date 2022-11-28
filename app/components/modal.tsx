@@ -2,10 +2,10 @@ import { Portal } from "./portal";
 import { useNavigate } from "@remix-run/react";
 
 interface props {
-    children: React.ReactNode;
-    isOpen: boolean;
-    ariaLabel?: string;
-    className?: string;
+    children: React.ReactNode
+    isOpen: boolean
+    ariaLabel?: string
+    className?: string
 }
 // When the backdrop (anywhere off of the modal itself) is clicked, the user will be navigated to the /home route causing the modal to close.
 export const Modal: React.FC<props> = ({ children, isOpen, ariaLabel, className}) => {
@@ -20,11 +20,10 @@ export const Modal: React.FC<props> = ({ children, isOpen, ariaLabel, className}
                 aria-modal="true"
                 onClick={() => navigate("/home")}
             ></div>
-                <div className="fixed inset-0 pointer-events-none flex justify-center items-center max-h-screen overflow-scroll">
-                    <div className={`${className} p-4 bg-gray-200 pointer-events-auto max-h-screen md:rounded-xl`}>
-                        
-                        {children} 
-                    </div>
+            <div className="fixed inset-0 pointer-events-none flex justify-center items-center max-h-screen overflow-scroll">
+                <div className={`${className} p-4 bg-gray-200 pointer-events-auto max-h-screen md:rounded-xl`}>
+                    {children} 
                 </div>
+            </div>
         </Portal>
     )}
