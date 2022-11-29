@@ -1,11 +1,11 @@
 
 import { unstable_parseMultipartFormData } from "@remix-run/node";
 import type { UploadHandler } from "@remix-run/node"
-import S3 from "aws-sdk/clients/s3";
+import S3Client from "aws-sdk/clients/s3";
 import cuid from "cuid";
   
   // 1
-const s3 = new S3({
+const s3 = new S3Client({
     region: process.env.KUDOS_BUCKET_REGION,
     accessKeyId: process.env.KUDOS_ACCESS_KEY_ID,
     secretAccessKey: process.env.KUDOS_SECRET_ACCESS_KEY,

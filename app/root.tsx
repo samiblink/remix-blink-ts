@@ -1,4 +1,4 @@
-import type { MetaFunction, LinksFunction } from "@remix-run/node";
+import type { MetaFunction, LinksFunction, ErrorBoundaryComponent } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,6 +13,8 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Blink Inventory Manager",
   viewport: "width=device-width,initial-scale=1",
+  keywords: "Remix, React, javascript, Heeros PSA integration, Inventory Management",
+  description: "Advanced Inventory Management System by Blink Group",
 });
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }]
@@ -34,3 +36,12 @@ export default function App() {
     </html>
   );
 }
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+  console.log(error)
+  return (
+    <div>
+      <h1>Whoops Error occurred!</h1>
+      <p>{error.message}</p>
+    </div>
+  )}
