@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 
 interface props {
     onChange: (file: File) => any,
-    imageUrl?: string
+    imageUrl?: String
 }
 
 export const ImageUploader = ({ onChange, imageUrl }: props) => {
