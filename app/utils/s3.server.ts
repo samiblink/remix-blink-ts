@@ -2,6 +2,7 @@ import {
   unstable_parseMultipartFormData,
   UploadHandler,
 } from "@remix-run/node";
+import { Readable } from "stream"
 import S3 from "aws-sdk/clients/s3";
 import cuid from "cuid";
 
@@ -11,7 +12,8 @@ const s3 = new S3({
   secretAccessKey: process.env.KUDOS_SECRET_ACCESS_KEY,
 });
 
-const uploadHandler: UploadHandler = async ({ name, filename, stream }) => {
+const uploadHandler: UploadHandler = async ({ name, filename, data }) => {
+  const stream = Readable.from(data)
   if (name !== "profile-pic") {
     stream.resume();
     return;
@@ -27,7 +29,6 @@ const uploadHandler: UploadHandler = async ({ name, filename, stream }) => {
 
   return Location;
 };
-
 export async function uploadAvatar(request: Request) {
   const formData = await unstable_parseMultipartFormData(
     request,
@@ -38,3 +39,5 @@ export async function uploadAvatar(request: Request) {
 
   return file;
 }
+
+
