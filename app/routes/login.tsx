@@ -115,10 +115,10 @@ export default function Login() {
                 >
                     {action === 'login' ? 'Sign Up' : 'Sign In'}
                 </button>
-                <img className="w-60" src={require("public/Blink_logo_black.png")} alt="Blink"></img>
-                <h2 className="text-4xl font-extrabold text-gray-900">Portal</h2>
+                <img className="w-60 select-none" src={require("public/Blink_logo_black.png")} alt="Blink"></img>
+                <h2 className="text-4xl font-extrabold text-gray-900 select-none">Portal</h2>
                 
-                <p className="font-semibold text-slate-800">
+                <p className="font-semibold text-slate-800 select-none">
                     {action === "login" ? "Sign In For Tooling Around!" : "Sign Up To Get Started!"}</p>
 
                 <form method="POST" className="rounded-2xl bg-gray-200 p-6 w-96">

@@ -26,7 +26,7 @@ export function FormField({
     }, [error])
   return (
     <>
-      <label htmlFor={htmlFor} className="text-gray-600 font-semibold">
+      <label htmlFor={htmlFor} className="text-gray-600 font-semibold select-none">
         {label}
       </label>
       <input
@@ -41,8 +41,8 @@ export function FormField({
         value={value}
       />
       <div className="text-xs font-semibold text-center tracking-wide text-red-500 w-full">
-+            {errorText || ''}
-+     </div>
+           {errorText || ''}
+     </div>
     </>
   )
 }
