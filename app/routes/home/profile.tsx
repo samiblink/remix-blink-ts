@@ -109,7 +109,7 @@ export default function ProfileSettings() {
     return (
         <Modal isOpen={true} className="w-1/3">
             <div className="p-3">
-                <h2 className="text-4xl font-semibold text-blue-600 text-center mb-4">Your Profile</h2>
+                <h2 className="text-4xl font-semibold text-gray-800 text-center mb-4">Your Profile</h2>
                 <div className="text-xs font-semibold text-center tracking-wide text-red-500 w-full mb-2">
                     {formError}
                 </div>
@@ -146,7 +146,7 @@ export default function ProfileSettings() {
                                 Delete Account
                                 </button>
                             <div className="w-full text-right mt-4">
-                                <button name="_action" value="save" className="rounded-xl bg-yellow-300 font-semibold text-blue-600 px-16 py-2 transition duration-300 ease-in-out hover:bg-yellow-400 hover:-translate-y-1">
+                                <button name="_action" value="save" className="rounded-xl bg-gray-800 font-semibold text-gray-300 px-16 py-2 transition duration-300 ease-in-out hover:bg-gray-400 hover:text-gray-800 hover:-translate-y-1">
                                     Save
                                 </button>
                             </div>

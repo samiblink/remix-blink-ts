@@ -21,7 +21,7 @@ export function SearchBar({ profile}: props) {
   }
 
   return (
-    <form className="w-full px-6 flex items-center gap-x-4 border-b-4 border-b-blue-900 border-opacity-30 h-20">
+    <form className="w-full px-6 flex items-center gap-x-4 border-b-2 border-b-gray-400 border-opacity-30 h-20">
       <div className={`flex items-center w-2/5`}>
         <input
           type="text"
@@ -43,25 +43,26 @@ export function SearchBar({ profile}: props) {
         containerClassName='w-40'
         name="sort"
         options={sortOptions}
+        
       
       />
       <button
         type="submit"
-        className="rounded-xl bg-yellow-300 font-semibold text-blue-600 px-3 py-2 transition duration-300 ease-in-out hover:bg-yellow-400 hover:-translate-y-1"
+        className="rounded-xl bg-gray-300 font-semibold text-gray-800 px-3 py-2 transition duration-300 ease-in-out hover:bg-gray-800 hover:text-gray-400 hover:-translate-y-1"
       >
         Search
       </button>
       {searchParams.get('filter') && (
         <button
           onClick={clearFilters}
-          className="rounded-xl bg-red-300 font-semibold text-blue-600 px-3 py-2 transition duration-300 ease-in-out hover:bg-yellow-400 hover:-translate-y-1"
+          className="rounded-xl bg-red-300 font-semibold text-gray-400 px-3 py-2 transition duration-300 ease-in-out hover:bg-gray-800 hover:text-gray-400 hover:-translate-y-1"
         >
           Clear Filters
         </button>
       )}
       <div className="flex-1" />
       <UserCircle
-        className="h-14 w-14 transition duration-300 ease-in-out hover:scale-110 hover:border-yellow-300"
+        className="h-14 w-14 transition duration-300 ease-in-out hover:scale-110 hover:border-gray-600"
         profile={profile}
         onClick={() => navigate("profile")}
       />
