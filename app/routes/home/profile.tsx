@@ -13,7 +13,7 @@ import { redirect, json } from "@remix-run/node"
 import { getUser, requireUserId, logout } from "~/utils/auth.server";
 import type { Department } from "@prisma/client";
 import { ImageUploader } from '~/components/image-uploader'
-import { updateUser } from "~/utils/user.server";
+import { updateUser, deleteUser } from "~/utils/user.server";
 
 
 export const action: ActionFunction = async ({ request }) => {
@@ -142,9 +142,9 @@ export default function ProfileSettings() {
                                 value={formData.department}
                                 onChange={e => handleInputChange(e, 'department')}
                             />
-                            {/*<button name="_action" value="delete" className="rounded-xl w-full bg-red-300 font-semibold text-white mt-4 px-16 py-2 transition duration-300 ease-in-out hover:bg-red-400 hover:-translate-y-1">
+                                <button name="_action" value="delete" className="rounded-xl w-full bg-red-300 font-semibold text-white mt-4 px-16 py-2 transition duration-300 ease-in-out hover:bg-red-400 hover:-translate-y-1">
                                 Delete Account
-    </button>*/}
+                                </button>
                             <div className="w-full text-right mt-4">
                                 <button name="_action" value="save" className="rounded-xl bg-yellow-300 font-semibold text-blue-600 px-16 py-2 transition duration-300 ease-in-out hover:bg-yellow-400 hover:-translate-y-1">
                                     Save
