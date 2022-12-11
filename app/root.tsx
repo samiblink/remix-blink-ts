@@ -11,9 +11,9 @@ import styles from "./styles/app.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Blink Inventory Manager",
+  title: "Blink Service Portal",
   viewport: "width=device-width,initial-scale=1",
-  keywords: "Remix, React, javascript, Heeros PSA integration, Inventory Management",
+  keywords: "Remix, React, javascript, Heeros PSA integration, Blink Group, Service Portal",
   description: "Advanced Inventory Management System by Blink Group",
 });
 export const links: LinksFunction = () => {
