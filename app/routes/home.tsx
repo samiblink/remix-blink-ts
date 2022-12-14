@@ -10,8 +10,8 @@ import type {Kudo as IKudo} from '@prisma/client';
 import type { Profile, Prisma } from "@prisma/client"
 import { Kudo } from "~/components/kudo"
 import { SearchBar } from "~/components/search-bar"
-
 import { RecentBar } from "~/components/recent-bar"
+import ProductsGrid from '../components/products';
 
 
 interface KudoWithProfile extends IKudo {
@@ -70,16 +70,21 @@ export default function Home() {
                 <UserPanel users={users}/>
                 <div className="flex-1 flex flex-col">
                     <SearchBar profile={user.profile} />
-                <div className="flex-1 flex">
+                <div className="flex-1 flex flex-col">
                     
                     <div className="w-full p-10 flex flex-col gap-y-4">
                         {kudos.map((kudo: KudoWithProfile) => (
                             <Kudo key={kudo.id} kudo={kudo} profile={kudo.author.profile} />
                         ))}
                     </div>
-                    <RecentBar kudos={recentKudos} />
+                    <div className="w-2/3 px-10">
+                        <ProductsGrid />
+                    </div>
+                    
                 </div>
+                
                 </div>
+                <RecentBar kudos={recentKudos} />
             </div> 
         </Layout>
     )
