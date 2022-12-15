@@ -77,8 +77,8 @@ export default function ProductsGrid() {
     []
   )
 
-  const [data, setData] = React.useState(() => makeData(100000))
-  const refreshData = () => setData(() => makeData(100000))
+  const [data, setData] = React.useState(() => makeData(10000))
+  const refreshData = () => setData(() => makeData(10000))
 
   const [grouping, setGrouping] = React.useState<GroupingState>([])
 
