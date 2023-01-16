@@ -11,7 +11,6 @@ import type { Profile, Prisma } from "@prisma/client"
 import { Kudo } from "~/components/kudo"
 import { SearchBar } from "~/components/search-bar"
 import { RecentBar } from "~/components/recent-bar"
-import ProductsGrid from '../components/products';
 import { getTaskData } from "~/utils/psa.server"
 import  TaskList from "~/components/task-list"
 
