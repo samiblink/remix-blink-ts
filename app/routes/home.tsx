@@ -12,6 +12,8 @@ import { Kudo } from "~/components/kudo"
 import { SearchBar } from "~/components/search-bar"
 import { RecentBar } from "~/components/recent-bar"
 import ProductsGrid from '../components/products';
+import { getTaskData } from "~/utils/psa.server"
+import  TaskList from "~/components/task-list"
 
 
 interface KudoWithProfile extends IKudo {
@@ -28,6 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     const sort = url.searchParams.get("sort")
     const filter = url.searchParams.get("filter")
     const user = await getUser(request)
+    const tasks = await getTaskData()
 
     let sortOptions: Prisma.KudoOrderByWithRelationInput = {}
     if (sort) {
@@ -58,11 +61,11 @@ export const loader: LoaderFunction = async ({ request }) => {
         }
     }
     const kudos = await getFilteredKudos(userId, sortOptions, textFilter)
-    return json({ users, kudos, recentKudos, user })
+    return json({ tasks, users, kudos, recentKudos, user })
 }
 
 export default function Home() {
-    const { users, kudos, recentKudos, user } = useLoaderData()
+    const { tasks, users, kudos, recentKudos, user } = useLoaderData()
     return (
         <Layout>
             <Outlet />
@@ -77,15 +80,16 @@ export default function Home() {
                             <Kudo key={kudo.id} kudo={kudo} profile={kudo.author.profile} />
                         ))}
                     </div>
-                    <div className="w-2/3 px-10">
-                        <ProductsGrid />
+
+                </div>
+                    <div className="w-1/1 p-10">
+                        <TaskList tasks={tasks}/>
                     </div>
-                    
+                </div>
+                    <RecentBar kudos={recentKudos} />
                 </div>
                 
-                </div>
-                <RecentBar kudos={recentKudos} />
-            </div> 
+             
         </Layout>
     )
 }

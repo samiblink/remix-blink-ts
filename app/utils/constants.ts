@@ -39,3 +39,10 @@ export const colorMap = {
     { name: "Sales", value: "SALES" },
     { name: "Marketing", value: "MARKETING" },
   ];
+  export const roles = [
+    { name: "Admin", value: "ADMIN" },
+    { name: "Internal Basic", value: "INTERNAL_BASIC" },
+    { name: "Client Basic", value: "CLIENT_BASIC" },
+    { name: "Client Plus", value: "CLIENT_BASIC"},
+    { name: "Guest", value: "GUEST"}
+  ];
